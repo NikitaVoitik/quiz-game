@@ -1,12 +1,17 @@
 import os
 import sys, pygame
+import time
+
 from openai import OpenAI
 from dotenv import load_dotenv
+import serial
 
 from src.app import App
 
 load_dotenv('.env')
 openai = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+SERIAL_PORT = '/dev/ttyACM0'
+BAUD_RATE = 9600
 
 level = 1
 
@@ -25,6 +30,16 @@ in_menu = True
 in_intermediate = False
 in_settings = False
 in_game = False
+
+def get_result():
+    """Receive the result from Arduino."""
+    with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=2) as ser:
+        print("Waiting for result...")
+        while True:
+            if ser.in_waiting > 0:
+                result = ser.readline().decode('utf-8').strip()
+                print(f"Arduino says: {result}")
+                return result
 
 
 def main():
@@ -81,15 +96,12 @@ def main():
                     app.fetch_and_render_question(openai, messages, level)
                     in_intermediate = False
                 if not in_intermediate:
-                    if event.key == pygame.K_q:
-                        app.check_answer(0)
-                        in_intermediate = True
-                    elif event.key == pygame.K_w:
-                        app.check_answer(1)
-                        in_intermediate = True
-                    elif event.key == pygame.K_e:
-                        app.check_answer(2)
-                        in_intermediate = True
+                    with serial.Serial(SERIAL_PORT, BAUD_RATE) as ser:
+                        ser.write("B".encode())
+                        time.sleep(0.5)
+                    k = get_result()
+                    print(k)
+
             elif in_settings:
                 if event.key == pygame.K_UP and app.settings.selected_index == 0:
                     level = (level + 1) % 3
