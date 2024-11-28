@@ -50,16 +50,20 @@ def api_request(openai, messages, level) -> Question:
     Returns:
         Question: An instance of the `Question` class containing the fetched quiz question.
     """
-    response = openai.chat.completions.create(
-        model="gpt-4o-mini",
-        temperature=random.uniform(0.5, 0.7),
-        messages=messages
-    )
-    messages.append(
-        {
-            "role": "assistant",
-            "content": response.choices[0].message.content.split('\n')[0]
-        })
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4o-mini",
+            temperature=random.uniform(0.5, 0.7),
+            messages=messages
+        )
+        messages.append(
+            {
+                "role": "assistant",
+                "content": response.choices[0].message.content.split('\n')[0]
+            })
+    except Exception as e:
+        return None
+        print(f"An error occurred: {e}")
     messages.append(
         {
             "role": "user",

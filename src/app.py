@@ -93,7 +93,10 @@ class App:
             messages (list): The list of messages to send to the API.
             level (int): The difficulty level of the question.
         """
-        self.question = api_request(openai, messages, level)
+        while True:
+            self.question = api_request(openai, messages, level)
+            if self.question is not None:
+                break
         self.render_question(self.question)
 
     def check_answer(self, ind):
