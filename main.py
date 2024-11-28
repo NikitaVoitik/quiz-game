@@ -115,7 +115,7 @@ def main():
                     else:
                         k = 2
                     app.check_answer(k)
-                    in_intermediate = False
+                    in_intermediate = True
                     pygame.display.update()
 
             elif in_settings:
