@@ -97,10 +97,23 @@ def main():
                     in_intermediate = False
                 if not in_intermediate:
                     with serial.Serial(SERIAL_PORT, BAUD_RATE) as ser:
-                        ser.write("B".encode())
+                        ans = app.get_answer_ind()
+                        if ans == 0:
+                            ans = "A"
+                        elif ans == 1:
+                            ans = "B"
+                        else:
+                            ans = "C"
+                        ser.write(ans.encode())
                         time.sleep(0.5)
                     k = get_result()
-                    print(k)
+                    if k == "A":
+                        k = 0
+                    elif k == "B":
+                        k = 1
+                    else:
+                        k = 2
+                    app.check_answer(k)
 
             elif in_settings:
                 if event.key == pygame.K_UP and app.settings.selected_index == 0:

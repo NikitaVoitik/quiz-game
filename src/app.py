@@ -109,6 +109,11 @@ class App:
             line = "Correct!"
         self.render_line(fw, self.size[1] - 100, line)
 
+    def get_answer_ind(self):
+        for i in range(0, len(self.question.choices)):
+            if self.question.choices[i] == self.question.answer:
+                return i
+
     def show_menu(self):
         """
         Displays the main menu on the screen.
