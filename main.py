@@ -10,7 +10,7 @@ from src.app import App
 
 load_dotenv('.env')
 openai = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-SERIAL_PORT = '/dev/cu.usbersi'
+SERIAL_PORT = '/dev/cu.usbserial-110'
 BAUD_RATE = 9600
 
 level = 1
