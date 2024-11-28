@@ -10,7 +10,7 @@ from src.app import App
 
 load_dotenv('.env')
 openai = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-SERIAL_PORT = '/dev/ttyACM0'
+SERIAL_PORT = '/dev/cu.usbersi'
 BAUD_RATE = 9600
 
 level = 1
@@ -95,6 +95,7 @@ def main():
                 if event.key == pygame.K_RETURN and in_intermediate:
                     app.fetch_and_render_question(openai, messages, level)
                     in_intermediate = False
+                    pygame.display.update()
                 if not in_intermediate:
                     with serial.Serial(SERIAL_PORT, BAUD_RATE) as ser:
                         ans = app.get_answer_ind()
@@ -114,6 +115,8 @@ def main():
                     else:
                         k = 2
                     app.check_answer(k)
+                    in_intermediate = False
+                    pygame.display.update()
 
             elif in_settings:
                 if event.key == pygame.K_UP and app.settings.selected_index == 0:
