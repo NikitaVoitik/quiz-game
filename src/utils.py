@@ -62,8 +62,8 @@ def api_request(openai, messages, level) -> Question:
                 "content": response.choices[0].message.content.split('\n')[0]
             })
     except Exception as e:
-        return None
         print(f"An error occurred: {e}")
+        return None
     messages.append(
         {
             "role": "user",
