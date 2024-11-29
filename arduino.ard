@@ -1,8 +1,6 @@
 const int buttonA = 2;
 const int buttonB = 3; 
-const int buttonC = 4; 
-const int ledCorrect = 8; 
-const int ledIncorrect = 9; 
+const int buttonC = 4;
 
 
 char correctAnswer = ' ';
@@ -21,12 +19,7 @@ void setup() {
   pinMode(buttonA, INPUT_PULLUP);
   pinMode(buttonB, INPUT_PULLUP);
   pinMode(buttonC, INPUT_PULLUP);
-  
-  pinMode(ledCorrect, OUTPUT);
-  pinMode(ledIncorrect, OUTPUT);
-  
-  digitalWrite(ledCorrect, LOW);
-  digitalWrite(ledIncorrect, LOW);
+
 }
 
 void loop() {
@@ -40,12 +33,6 @@ void loop() {
   if (selectedAnswer != ' ') { 
     
     Serial.println(selectedAnswer);
-    
-    if (selectedAnswer == correctAnswer) {
-      digitalWrite(ledCorrect, HIGH);
-    } else {
-      digitalWrite(ledIncorrect, HIGH);
-    }
     
     delay(1000);
     digitalWrite(ledCorrect, LOW);
