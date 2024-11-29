@@ -111,6 +111,7 @@ class App:
         if self.question.choices[ind] == self.question.answer:
             line = "Correct!"
         self.render_line(fw, self.size[1] - 100, line)
+        return line == "Correct!"
 
     def get_answer_ind(self):
         for i in range(0, len(self.question.choices)):
