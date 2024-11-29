@@ -97,16 +97,7 @@ def main():
                     in_intermediate = False
                     pygame.display.update()
                 if not in_intermediate:
-                    with serial.Serial(SERIAL_PORT, BAUD_RATE) as ser:
-                        ans = app.get_answer_ind()
-                        if ans == 0:
-                            ans = "A"
-                        elif ans == 1:
-                            ans = "B"
-                        else:
-                            ans = "C"
-                        ser.write(ans.encode())
-                        time.sleep(0.5)
+
                     k = get_result()
                     if k == "A":
                         k = 0
@@ -114,7 +105,7 @@ def main():
                         k = 1
                     else:
                         k = 2
-                    app.check_answer(k)
+                    res = app.check_answer(k)
                     in_intermediate = True
                     pygame.display.update()
 

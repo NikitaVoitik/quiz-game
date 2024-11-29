@@ -109,8 +109,12 @@ class App:
         fw, fh = self.font.size("Correct!")
         line = "Wrong!"
         if self.question.choices[ind] == self.question.answer:
+            self.display.fill(colors.Green)
             line = "Correct!"
+        else:
+            self.display.fill(colors.Red)
         self.render_line(fw, self.size[1] - 100, line)
+        return line == "Correct!"
 
     def get_answer_ind(self):
         for i in range(0, len(self.question.choices)):
